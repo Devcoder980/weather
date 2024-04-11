@@ -49,25 +49,6 @@ app.get('/api/location', async (req, res) => {
     }
 });
 
-app.get('/api/future-weather', async (req, res) => {
-    try {
-        const { lat, lon } = req.query;
-        const apiKey = process.env.WEATHER_API_KEY;
-        const tomorrowDate = new Date();
-        tomorrowDate.setDate(tomorrowDate.getDate() + 16);
-        const tomorrowDateString = tomorrowDate.toISOString().split('T')[0];
-        console.log(tomorrowDateString);
-        const apiUrl = `https://api.weatherapi.com/v1/future.json?key=${apiKey}&q=${lat},${lon}&dt=${tomorrowDateString}`;
-        console.log(apiUrl);
-        // https://api.weatherapi.com/v1/future.json?key=b7b7fd83f3d94c03b7c42745241104&q=${weatherData.location.lat},${weatherData.location.lon}&dt=${tomorrowDate}`)
-        const response = await axios.get(apiUrl);
-
-        res.json(response.data);
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: 'Failed to fetch future weather data' });
-    }
-});
 
 
 app.listen(port, () => {
